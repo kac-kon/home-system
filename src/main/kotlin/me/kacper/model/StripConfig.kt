@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import me.kacper.lights.StripType
+import me.kacper.lights.StripTypes
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -15,7 +15,7 @@ data class StripConfig(
     val color: Color,
 
     @JsonAlias(value = ["Type"])
-    val type: StripType,
+    val type: StripTypes,
 
     @JsonAlias(value = ["Enabled"])
     val enabled: Boolean,

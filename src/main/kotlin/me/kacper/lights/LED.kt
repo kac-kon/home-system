@@ -11,8 +11,8 @@ interface LED {
 
     val strip: Strip
 
-    val type: StripType
-        get() = strip.stripType
+    val type: StripTypes
+        get() = strip.stripType.type
 
     fun turnOn()
 
@@ -27,5 +27,5 @@ interface LED {
 }
 
 interface AddressedLED : LED {
-    var addressed: Addressed
+    var addressedConfig: Addressed
 }

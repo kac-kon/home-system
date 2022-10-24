@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
+import me.kacper.exceptions.ElementNotFoundException
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -25,22 +26,31 @@ data class Color(
     fun toMap() = mapOf(
         RED to red,
         GREEN to green,
-        BLUE to blue
+        BLUE to blue,
+        BRIGHTNESS to brightness
     )
 
-    private fun Int.tone(): Int {
+    private fun Int.toned(): Int {
         return (this * brightness).div(100)
     }
 
     fun toMapToned() = mapOf(
-        RED to red.tone(),
-        GREEN to green.tone(),
-        BLUE to blue.tone()
+        RED to red.toned(),
+        GREEN to green.toned(),
+        BLUE to blue.toned()
     )
+
+    operator fun get(key: String): Int {
+        val map = this.toMap()
+        return if (key in map.keys)
+            map[key]!!.toned()
+        else throw ElementNotFoundException(key, map.keys)
+    }
 
     companion object{
         const val RED = "RED"
         const val GREEN = "GREEN"
         const val BLUE = "BLUE"
+        const val BRIGHTNESS = "BRIGHTNESS"
     }
 }
